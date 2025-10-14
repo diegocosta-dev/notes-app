@@ -14,14 +14,24 @@
                     <!-- form -->
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
-                            <form action="#" method="post">
+                            <form action="{{ route('login.submit') }}" method="post">
+                                @csrf
+
                                 <div class="mb-3">
                                     <label for="text_username" class="form-label">Username</label>
-                                    <input type="text" class="form-control bg-dark text-info" name="text_username" required>
+                                    <input type="email" class="form-control bg-dark text-info" name="text_username" value="{{ old('text_username') }}">
+                                    {{-- show error --}}
+                                    @error('text_username')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="text_password" class="form-label">Password</label>
-                                    <input type="password" autocomplete="none" class="form-control bg-dark text-info" name="text_password" required>
+                                    <input type="password" autocomplete="none" class="form-control bg-dark text-info" name="text_password" value="{{ old('text_password') }}">
+                                    {{-- show error --}}
+                                    @error('text_password')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-secondary w-100">LOGIN</button>
@@ -35,6 +45,16 @@
                         <small>&copy; {{ date('Y') }} Notes</small>
                     </div>
 
+                    {{-- errors --}}
+                    {{-- @if ($errors->any())
+                        <div class="alert alert-danger mt-3">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif --}}
                 </div>
             </div>
         </div>
