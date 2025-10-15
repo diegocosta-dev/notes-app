@@ -67,17 +67,17 @@ class AuthController extends Controller
             ]
         );
 
-        echo "Welcome " . $user->username;
-
-        // $users = User::all()->toArray();
-        // $userModel = new User();
-        // $users = $userModel->all()->toArray();
-        
-        
+        if (session('user'))
+        {
+            return redirect()->to('/')->with('successLogin', 'Are you You have successfully logged in!
+');
+        }
     }
 
     public function logout(Request $request)
     {
-        echo "Logout";
+        // Logout user from the application
+        session()->forget('user');
+        return redirect()->to('/login');
     }
 }
