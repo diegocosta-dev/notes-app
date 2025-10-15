@@ -7,34 +7,17 @@
                 {{ session('successLogin') }}
             </div>
         @endif
-        
+
         <div class="row justify-content-center">
             <div class="col">
 
-                <div class="row mb-3 align-items-center">
-                    <div class="col">
-                        <img src="assets/images/logo.png" alt="Notes logo">
-                    </div>
-                    <div class="col text-center">
-                        A simple <span class="text-warning">Laravel</span> project!
-                    </div>
-                    <div class="col">
-                        <div class="d-flex justify-content-end align-items-center">
-                            <span class="me-3"><i class="fa-solid fa-user-circle fa-lg text-secondary me-3"></i>[username]</span>
-                            <a href="{{ route('logout') }}" class="btn btn-outline-secondary px-3">
-                                Logout<i class="fa-solid fa-arrow-right-from-bracket ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
+                @include('components.top_bar')
 
                 <!-- no notes available -->
                 <div class="row mt-5">
                     <div class="col text-center">
                         <p class="display-6 mb-5 text-secondary opacity-50">You have no notes available!</p>
-                        <a href="#" class="btn btn-secondary btn-lg p-3 px-5">
+                        <a href="{{ route('new.note') }}" class="btn btn-secondary btn-lg p-3 px-5">
                             <i class="fa-regular fa-pen-to-square me-3"></i>Create Your First Note
                         </a>
                     </div>
@@ -45,7 +28,7 @@
 
                 <!-- notes are available -->
                 <div class="d-flex justify-content-end mb-3">
-                    <a href="#" class="btn btn-secondary px-3">
+                    <a href="{{ route('new.note') }}" class="btn btn-secondary px-3">
                         <i class="fa-regular fa-pen-to-square me-2"></i>New Note
                     </a>
                 </div>
