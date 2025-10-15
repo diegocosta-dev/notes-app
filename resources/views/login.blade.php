@@ -14,6 +14,13 @@
                     <!-- form -->
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
+                            {{-- loginError --}}
+                            @if (session('loginError'))
+                                <div class="alert alert-danger mt-3">
+                                    {{ session('loginError') }}
+                                </div>
+                            @endif
+                            
                             <form action="{{ route('login.submit') }}" method="post">
                                 @csrf
 
@@ -44,6 +51,7 @@
                     <div class="text-center text-secondary mt-3">
                         <small>&copy; {{ date('Y') }} Notes</small>
                     </div>
+
 
                     {{-- errors --}}
                     {{-- @if ($errors->any())

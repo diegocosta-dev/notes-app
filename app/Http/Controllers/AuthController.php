@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PDOException;
 
 class AuthController extends Controller
 {
@@ -30,8 +33,47 @@ class AuthController extends Controller
         $username = $request->input('text_username');
         $password = $request->input('text_password');
 
-        echo "Username: " . $username . "<br>";
-        echo "Password: " . $password;
+        // check if your user exists
+        $user = User::where('username', $username)
+                    ->where('deleted_at', null)
+                    ->first();
+
+        if (!$user)
+        {
+            return redirect()
+                   ->back()->withInput()
+                   ->with('loginError', 'Password or Username is incorrect');
+        }
+
+        // verify password
+        if (!password_verify($password, $user->password))
+        {
+            return redirect()
+                   ->back()->withInput()
+                   ->with('loginError', 'Password or Username is incorrect');
+        }
+
+        // update last login
+        $user->last_login = date('Y-m-d H:i:s');
+        $user->save();
+
+        // login
+        session(
+            [
+                'user' => [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                ]
+            ]
+        );
+
+        echo "Welcome " . $user->username;
+
+        // $users = User::all()->toArray();
+        // $userModel = new User();
+        // $users = $userModel->all()->toArray();
+        
+        
     }
 
     public function logout(Request $request)
