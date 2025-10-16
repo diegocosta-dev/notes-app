@@ -18,19 +18,24 @@ class MainController extends Controller
 
     public function addNote()
     {
-		//
+        return view('add_note');
+    }
+
+    public function noteSubmit(Request $request)
+    {
+        echo 'Creating New Note';
     }
     
     public function editNote($id)
     {
-		$id = Operations::decriptHash($id);
-		echo $id;
+        $id = Operations::decriptHash($id);
+        echo $id;
     }
 
     public function deletNote($id)
     {
-		$id = Operations::decriptHash($id);
-		echo $id;
+        $id = Operations::decriptHash($id);
+        echo $id;
     }
 
 }
