@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -12,7 +13,11 @@ class MainController extends Controller
     public function index()
     {
 		$id = session('user.id');
-		$notes = User::find($id)->notes()->get()->toArray();
+		$notes = User::find($id)
+                 ->notes()
+                 ->whereNull('deleted_at')
+                 ->get()
+                 ->toArray();
 
 		return view('home', ['notes' => $notes]);
     }
@@ -92,10 +97,23 @@ class MainController extends Controller
         return redirect()->route('home')->with('success','Note update successfully.');
     }
 
-    public function deletNote($id)
+    public function deleteNote($id)
     {
         $id = Operations::decriptHash($id);
-        echo $id;
+        $note = Note::find($id);
+
+        return view('delete_note', ['note' => $note]);
+    }
+
+    public function deleteNoteConfirm($id)
+    {
+        $id = Operations::decriptHash($id);
+        $note = Note::find($id);
+        // $note->delete();
+        $note->deleted_at = Carbon::now()->toDateTimeString();
+        $note->save();
+
+        return redirect()->route('home')->with('success','Note was removed successfully');
     }
 
 }

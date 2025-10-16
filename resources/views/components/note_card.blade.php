@@ -13,7 +13,7 @@
                     <a href="{{ route('edit.note', ['id' => Crypt::encrypt($note['id'])]) }}" class="btn btn-outline-secondary btn-sm mx-1">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
-                    <a href="{{ route('delet.note', ['id' => Crypt::encrypt($note['id'])]) }}" class="btn btn-outline-danger btn-sm mx-1">
+                    <a href="{{ route('delete.note', ['id' => Crypt::encrypt($note['id'])]) }}" class="btn btn-outline-danger btn-sm mx-1">
                         <i class="fa-regular fa-trash-can"></i>
                     </a>
                 </div>
