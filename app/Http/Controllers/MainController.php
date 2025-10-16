@@ -60,6 +60,12 @@ class MainController extends Controller
     public function editNote($id)
     {
         $id = Operations::decriptHash($id);
+
+        if ($id == null) 
+        {
+            return redirect()->route('home');
+        }
+
         $note = Note::find($id);
 
         return view('edit_note', ['note' => $note]);
@@ -88,6 +94,12 @@ class MainController extends Controller
         }
 
         $id = Operations::decriptHash($request->note_id);
+
+        if ($id == null) 
+        {
+            return redirect()->route('home');
+        }
+
         $note = Note::find($id);
 
         $note->title = $request->text_title;
@@ -100,6 +112,12 @@ class MainController extends Controller
     public function deleteNote($id)
     {
         $id = Operations::decriptHash($id);
+
+        if ($id == null) 
+        {
+            return redirect()->route('home');
+        }
+
         $note = Note::find($id);
 
         return view('delete_note', ['note' => $note]);
@@ -108,10 +126,17 @@ class MainController extends Controller
     public function deleteNoteConfirm($id)
     {
         $id = Operations::decriptHash($id);
+
+        if ($id == null) 
+        {
+            return redirect()->route('home');
+        }
+
         $note = Note::find($id);
-        // $note->delete();
-        $note->deleted_at = Carbon::now()->toDateTimeString();
-        $note->save();
+        // $note->deleted_at = Carbon::now()->toDateTimeString();
+        // $note->save();
+        
+        $note->delete();
 
         return redirect()->route('home')->with('success','Note was removed successfully');
     }
