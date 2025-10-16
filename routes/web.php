@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([ChekIsLogged::class])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
-    Route::get('/new-note', [MainController::class, 'newNote'])->name(name: 'new.note');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/add-note', [MainController::class, 'addNote'])->name(name: 'add.note');
+    Route::get('/edit-note/{id}', [MainController::class, 'editNote'])->name('edit.note');
+    Route::get('/delet-note/{id}', [MainController::class, 'deletNote'])->name('delet.note');
 });
 
 Route::middleware([ChekIsNotLogged::class])->group(function(){

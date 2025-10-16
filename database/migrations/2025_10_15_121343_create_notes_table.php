@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->integer('user_id')->nullable()->unique();
+            $table->integer('user_id')->nullable();
             $table->string('title', 255)->nullable();
             $table->string('text', 2056)->nullable();
             $table->timestamps();
