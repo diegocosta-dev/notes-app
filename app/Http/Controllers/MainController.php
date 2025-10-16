@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
 use Illuminate\Http\Request;
@@ -23,7 +24,32 @@ class MainController extends Controller
 
     public function noteSubmit(Request $request)
     {
-        echo 'Creating New Note';
+        $request->validate(
+            [
+                'text_title' => 'required|min:3|max:255',
+                'text_note' => 'required|min:3|max:2056'
+            ],
+            [
+                'text_title.required' => 'The Title is Required.',
+                'text_title.min' =>  'The Title must be at least :min characters.',
+                'text_title.max' =>  'The Title must not exceed :max characters.',
+                'text_note.required' => 'The Note is Required.',
+                'text_note.min' =>  'The Note must be at least :min characters.',
+                'text_note.max' =>  'The Note must not exceed :max characters.',
+            ]
+        );
+
+        $userId = session('user.id');
+
+        $note = new Note();
+        $note->user_id = $userId;
+
+        $note->title = $request->text_title;
+        $note->text = $request->text_note;
+
+        $note->save();
+
+        return redirect()->route('home')->with('success', 'Note successfully saved.');
     }
     
     public function editNote($id)
